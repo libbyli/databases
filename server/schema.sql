@@ -8,13 +8,20 @@ CREATE TABLE users (
   PRIMARY KEY (userID)
 );
 
+CREATE TABLE rooms (
+  roomID int,
+  name varchar(50),
+  PRIMARY KEY (roomID)
+);
+
 CREATE TABLE messages (
   ID int,
   userID int,
   message varchar(300),
-  room varchar(50),
-  PRIMARY KEY (ID)
-  FOREIGN KEY (userID) REFERENCES users(userID)
+  roomID int,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (userID) REFERENCES users(userID),
+  FOREIGN KEY (roomID) REFERENCES rooms(roomID)
 );
 
 CREATE TABLE friends (
@@ -22,7 +29,6 @@ CREATE TABLE friends (
   userID int,
   FOREIGN KEY (userID) REFERENCES users(userID)
 );
-
 
 
 
