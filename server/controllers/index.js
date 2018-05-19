@@ -28,6 +28,7 @@ module.exports = {
   messages: {
     // a function which handles a get request for all messages
     get: function (request, response) {
+      console.log('get worked');
       models.messages.get(data => {
         var parsedData = JSON.parse(data);
         dataObj.messages.push(parsedData[0]);
