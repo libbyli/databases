@@ -64,7 +64,6 @@ var app = {
       data: {},
       success: function(data) {
         // Don't bother if we have nothing to work with
-        console.log('data: ', data);
         if (!data.results || !data.results.length) { return; }
 
         // Store messages for caching later

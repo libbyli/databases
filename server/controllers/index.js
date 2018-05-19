@@ -15,8 +15,14 @@ var sendResponse = function(response, data, statusCode) {
 };
 
 var dataObj = {
-  results: []
+  messages: [],
 };
+
+var userObj = {
+  users: []
+};
+
+var objectIdCounter = 1;
 
 module.exports = {
   messages: {
@@ -24,46 +30,31 @@ module.exports = {
     get: function (request, response) {
       models.messages.get(data => {
         var parsedData = JSON.parse(data);
-        dataObj.results.push(parsedData[0]);
+        dataObj.messages.push(parsedData[0]);
         sendResponse(response, dataObj);
       });
-      // if (request.url !== "/classes/messages") {
-      //   response.writeHead(404, headers);
-      //   response.end();
-      // } else {
-      //   models.messages.get(function(data){
-      //     // do something with data
-      //   })
-      //   response.writeHead(200, headers);
-      //   response.end(JSON.stringify(dataObj));
-      // }
     }, 
     // a function which handles posting a message to the database
-    post: function (req, res) {
-      // if (request.url === '/classes/messages') {
-      //   let body = '';
-      //   request.on('data', chunk => {
-      //     body += chunk;
-      //   }).on('end', () => {
-      //     console.log(body);
-      //     dataObj.results.push(JSON.parse(body));
-      //     response.writeHead(201, headers);
-      //     response.end();
-      //   }).on('error', (error) => {
-      //     response.writeHead(500, headers);
-      //     response.end();
-      //   });
-      // } else {
-      //   response.writeHead(404, headers);
-      //   response.end();
-      // } 
-    },
+    post: function (request, response) {
+      models.messages.post(request);
+      console.log(request.body);
+      sendResponse(response, request.body, 201);
+    }
   },
 
   users: {
     // Ditto as above
-    get: function (req, res) {},
-    post: function (req, res) {}
+    get: function (request, response) {
+      models.users.get(data => {
+        var parsedData = JSON.parse(data);
+        userObj.users.push(parsedData[0]);
+        sendResponse(respone, userObj);
+      });
+    },
+    post: function (request, response) {
+      models.users.post();
+      sendResponse(response, request.body.username, 201);
+    }
   }
 };
 
